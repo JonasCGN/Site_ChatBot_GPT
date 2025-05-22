@@ -19,10 +19,24 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ${PATH_VOULUME}
+      - ollama-local:${PATH_OLLAMA_LOCAL}
     command: ["serve"]
     networks:
       - net
+
+  front:
+    build:
+      context: front
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ollama
+    networks:
+      - net
+    
 
 volumes:
   ollama-local:

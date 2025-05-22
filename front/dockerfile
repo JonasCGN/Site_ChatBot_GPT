@@ -1,7 +1,7 @@
-FROM node:18
-
-COPY . /app
+FROM node:slim
 WORKDIR /app
+COPY package.json package-lock.json* ./
+
 
 RUN npm install
 CMD ["npm", "start"]
