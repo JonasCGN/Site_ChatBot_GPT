@@ -1,6 +1,30 @@
 conversation = document.getElementById("conversation");
+const button_send = document.getElementById("button_send");
+send_message = false;
 
-function addMessageToConversation(message) {
+function sendMessage() {
+    const input = document.getElementById("input_message");
+    const message = input.value.trim();
+    if (message) {
+        addMessageToConversation(message);
+        input.value = "";
+    }
+}
+
+function addMessageToConversation(message, showThink = false) {
+    if (!send_message) {
+        send_message = true;
+        const content_chat = document.getElementsByClassName("content_chat");
+        const chat_space = document.getElementsByClassName("chat_space");
+        const title_chat_space = document.getElementsByClassName("title_chat_space");
+        const form_content = document.getElementsByClassName("form_content");
+
+        Array.from(content_chat).forEach(element => element.classList.add("message"));
+        Array.from(chat_space).forEach(element => element.classList.add("message"));
+        Array.from(title_chat_space).forEach(element => element.classList.add("message"));
+        Array.from(form_content).forEach(element => element.classList.add("message"));
+    }
+
     const messageElement = document.createElement("div");
     messageElement.className = "user";
 
@@ -15,7 +39,6 @@ function addMessageToConversation(message) {
     conversation.appendChild(messageElement);
     conversation.scrollTop = conversation.scrollHeight;
 
-    // Cria o elemento da resposta do bot
     const botMessageElement = document.createElement("div");
     botMessageElement.className = "chat_bot";
     const botMessageContent = document.createElement("div");
@@ -23,11 +46,6 @@ function addMessageToConversation(message) {
     const botParagraph = document.createElement("p");
     botMessageContent.appendChild(botParagraph);
     botMessageElement.appendChild(botMessageContent);
-
-    // Elementos para o think
-    let thinkDiv = null;
-    let titleThinkDiv = null;
-    let inThink = false;
 
     conversation.appendChild(botMessageElement);
     conversation.scrollTop = conversation.scrollHeight;
@@ -46,9 +64,14 @@ function addMessageToConversation(message) {
     .then(response => {
         const reader = response.body.getReader();
         let fullText = "";
+        let inThink = false;
+        let thinkDiv = null;
+
         function readChunk() {
             return reader.read().then(({ done, value }) => {
-                if (done) return;
+                if (done) {
+                    return;
+                }
                 const chunk = new TextDecoder().decode(value);
                 chunk.split(/\n+/).forEach(line => {
                     if (line.trim()) {
@@ -61,17 +84,11 @@ function addMessageToConversation(message) {
                                         inThink = true;
                                         thinkDiv = document.createElement('div');
                                         thinkDiv.className = 'think';
-                                        titleThinkDiv = document.createElement('div');
-                                        titleThinkDiv.className = 'title_think';
-                                        const h3 = document.createElement('h3');
-                                        h3.textContent = 'Pensando...';
-                                        titleThinkDiv.appendChild(h3);
                                         botMessageElement.appendChild(thinkDiv);
-                                        botMessageElement.appendChild(titleThinkDiv);
                                         const before = text.split('<think>')[0];
                                         if (before) {
                                             fullText += before;
-                                            botParagraph.textContent = fullText;
+                                            botParagraph.innerHTML = marked.parse(fullText);
                                         }
                                         text = text.substring(text.indexOf('<think>') + 7);
                                     } else if (inThink && text.includes('</think>')) {
@@ -79,21 +96,18 @@ function addMessageToConversation(message) {
                                         thinkDiv.textContent += inside;
                                         inThink = false;
                                         thinkDiv = null;
-                                        if (titleThinkDiv) {
-                                            titleThinkDiv.remove();
-                                            titleThinkDiv = null;
-                                        }
                                         text = text.substring(text.indexOf('</think>') + 8);
                                     } else if (inThink) {
                                         thinkDiv.textContent += text;
                                         text = '';
                                     } else {
                                         fullText += text;
-                                        botParagraph.textContent = fullText;
+                                        botParagraph.innerHTML = marked.parse(fullText);
                                         text = '';
                                     }
                                 }
                                 conversation.scrollTop = conversation.scrollHeight;
+                                button_send.disabled = true;
                             }
                         } catch (e) {
                             // Ignora linhas que não são JSON válidas
@@ -101,6 +115,8 @@ function addMessageToConversation(message) {
                     }
                 });
                 return readChunk();
+            }).finally(() => {
+                button_send.disabled = false;
             });
         }
         return readChunk();
@@ -109,14 +125,3 @@ function addMessageToConversation(message) {
         console.error("Error:", error);
     });
 }
-
-
-//<div class="content_chat message">
-//			<div class="chat_space message">
-//				<h1 class="message"></h1>
-            // div form_content message
-
-// addMessageToConversation(
-//     "Olá, como posso ajudar?",
-//     true,
-// );

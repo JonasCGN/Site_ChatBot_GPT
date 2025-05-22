@@ -5,7 +5,7 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ollama-local:${PATH_OLLAMA_LOCAL}
+      - ${PATH_VOULUME}
     command: ["serve"]
     networks:
       - net
@@ -20,14 +20,11 @@ services:
       - "3000:3000"
     restart: always
     command: sh -c "npm install && npm start"
-    depends_on:
-      - backend
     networks:
       - net
 
 volumes:
   ollama-local:
-  postgres_storage:
 
 networks:
   net:

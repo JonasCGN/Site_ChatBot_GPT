@@ -50,7 +50,7 @@ body{
     background: var(--color-bg-form);
     border-radius: 30px;
 
-    padding: 10 5 5 7;
+    padding: 10px;
 
     width: 650px;
 }
@@ -74,7 +74,8 @@ form{
 input[type="text"] {
     all: unset;
     
-    margin: 10px;
+    width: 100%;
+    margin-bottom: 10px;
 
     color: var(--color-user);
     background: var(--color-bg-form);
@@ -83,7 +84,7 @@ input[type="text"] {
     text-wrap-mode: nowrap;
 }
 
-.form_content form div{
+.form_content div div{
     display: flex;
     justify-content: flex-end;
 }
