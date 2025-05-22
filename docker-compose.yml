@@ -19,9 +19,8 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ollama-local:/data
-    command: >
-      sh -c "ollama serve & sleep 5 && ollama pull deepseek-r1:14b"
+      - ollama-local:/root/.ollama
+    command: ["serve"]
     networks:
       - net
 
