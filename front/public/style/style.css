@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 body{
-    background-color: #212121;
+    background-color: var(--color-bg);
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-
-
     margin: 0;
 }
 
@@ -16,6 +14,17 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.content_chat{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content_chat.message{
+    height: 0;
 }
 
 .chat_space{
@@ -38,7 +47,7 @@ body{
 }
 
 .form_content{
-    background: #303030;
+    background: var(--color-bg-form);
     border-radius: 30px;
 
     padding: 10 5 5 7;
@@ -47,9 +56,10 @@ body{
 }
 
 h1{
-    color: #ffffff;
+    color: var(--color-user);
     text-align: center;
     font-family: "Inter", sans-serif;
+    font-size: var(--font-size-h1);
 }
 
 h1.message{
@@ -66,8 +76,8 @@ input[type="text"] {
     
     margin: 10px;
 
-    color: #ffffff;
-    background: #303030;
+    color: var(--color-user);
+    background: var(--color-bg-form);
 
     white-space: pre-wrap;
     text-wrap-mode: nowrap;
@@ -79,8 +89,8 @@ input[type="text"] {
 }
 
 button{
-    background-color: #676767;
-    color: #2f2f2f;
+    background-color: var(--color-btn);
+    color: var(--color-btn-text);
     
     width: 36px;
     height: 36px;
@@ -104,18 +114,18 @@ button{
     box-sizing: border-box;
     margin: 0 auto;
     scrollbar-width: thin;
-    scrollbar-color: #676767 #212121;
+    scrollbar-color: var(--color-scrollbar) var(--color-bg);
 }
 
 .conversation::-webkit-scrollbar {
     width: 8px;
 }
 .conversation::-webkit-scrollbar-thumb {
-    background: #676767;
+    background: var(--color-scrollbar);
     border-radius: 4px;
 }
 .conversation::-webkit-scrollbar-track {
-    background: #212121;
+    background: var(--color-bg);
 }
 
 @media (max-width: 698px) {
@@ -125,6 +135,7 @@ button{
 
     .chat_space.message{
         padding-bottom: 0px;
+        margin: 0 5px 0 5px;
     }
 
     .form_content {
@@ -136,7 +147,7 @@ button{
 
     input[type="text"] {
         margin: 5px;
-        font-size: 18px;
+        font-size: var(--font-size-base-mobile);
     }
 
     button {

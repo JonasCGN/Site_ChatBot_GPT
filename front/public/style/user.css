@@ -6,7 +6,7 @@
 }
 
 .user_mensagem{
-    background-color: #303030;
+    background-color: var(--color-bg-form);
     max-width: 480px;
 
     border-radius: 25px;
@@ -14,7 +14,7 @@
 }
 
 .user_mensagem p {
-    color: #ffffff;
+    color: var(--color-user);
 
     max-width: 680px;
     width: 100%;
@@ -23,6 +23,7 @@
 
     padding-left: 10px;
     padding-right: 10px;
+    font-size: var(--font-size-base);
 }
 
 @media (max-width: 698px) {
@@ -35,7 +36,7 @@
     }
 
     .user_mensagem p {
-        font-size: 14px;
+        font-size: var(--font-size-base-mobile);
         line-height: 1.4;
     }
 }

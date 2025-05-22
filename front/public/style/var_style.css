@@ -1,0 +1,18 @@
+:root {
+    /* Font sizes */
+    --font-size-h1: 32px;
+    --font-size-h3: 16px;
+    --font-size-base: 18px;
+    --font-size-base-mobile: 14px;
+
+    /* Colors */
+    --color-bg: #212121;
+    --color-bg-form: #303030;
+    --color-bg-think: #989898;
+    --color-scrollbar: #676767;
+    --color-user: #ffffff;
+    --color-bot: #ffffff;
+    --color-think: #989898;
+    --color-btn: #676767;
+    --color-btn-text: #2f2f2f;
+}
