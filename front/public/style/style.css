@@ -82,6 +82,7 @@ input[type="text"] {
 
     white-space: pre-wrap;
     text-wrap-mode: nowrap;
+    text-align: justify;
 }
 
 .form_content div div{
