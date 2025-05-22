@@ -1,6 +1,20 @@
 conversation = document.getElementById("conversation");
+send_message = false;
 
 function addMessageToConversation(message) {
+    if(!send_message){
+        send_message = true;
+        const content_chat = document.getElementsByClassName("content_chat");
+        const chat_space = document.getElementsByClassName("chat_space");
+        const title_chat_space = document.getElementsByClassName("title_chat_space");
+        const form_content = document.getElementsByClassName("form_content");
+
+        Array.from(content_chat).forEach(element => element.classList.add("message"));
+        Array.from(chat_space).forEach(element => element.classList.add("message"));
+        Array.from(title_chat_space).forEach(element => element.classList.add("message"));
+        Array.from(form_content).forEach(element => element.classList.add("message"));
+    }
+
     const messageElement = document.createElement("div");
     messageElement.className = "user";
 
