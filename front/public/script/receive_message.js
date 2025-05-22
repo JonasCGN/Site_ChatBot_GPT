@@ -110,6 +110,12 @@ function addMessageToConversation(message) {
     });
 }
 
+
+//<div class="content_chat message">
+//			<div class="chat_space message">
+//				<h1 class="message"></h1>
+            // div form_content message
+
 // addMessageToConversation(
 //     "Olá, como posso ajudar?",
 //     true,

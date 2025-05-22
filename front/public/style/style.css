@@ -133,12 +133,23 @@ button{
         padding: 0 10px;
     }
 
+    .chat_space {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .chat_space.message{
         padding-bottom: 0px;
         margin: 0 5px 0 5px;
     }
 
-    .form_content {
+    .form_content{
+        max-width: 80%;
+    }
+
+    .form_content.message {
         width: 100%;
 
         border-bottom-left-radius: 0;
