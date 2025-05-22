@@ -12,8 +12,7 @@ function sendMessage() {
 }
 
 function addMessageToConversation(message, showThink = false) {
-
-    if(!send_message){
+    if (!send_message) {
         send_message = true;
         const content_chat = document.getElementsByClassName("content_chat");
         const chat_space = document.getElementsByClassName("chat_space");
@@ -40,7 +39,6 @@ function addMessageToConversation(message, showThink = false) {
     conversation.appendChild(messageElement);
     conversation.scrollTop = conversation.scrollHeight;
 
-    // Cria o elemento da resposta do bot
     const botMessageElement = document.createElement("div");
     botMessageElement.className = "chat_bot";
     const botMessageContent = document.createElement("div");
@@ -68,54 +66,55 @@ function addMessageToConversation(message, showThink = false) {
         let fullText = "";
         let inThink = false;
         let thinkDiv = null;
+
         function readChunk() {
             return reader.read().then(({ done, value }) => {
-            if (done) {
-                return;
-            }
-            const chunk = new TextDecoder().decode(value);
-            chunk.split(/\n+/).forEach(line => {
-                if (line.trim()) {
-                try {
-                    const data = JSON.parse(line);
-                    if (data.response) {
-                        let text = data.response;
-                        while (text.length > 0) {
-                            if (!inThink && text.includes('<think>')) {
-                                inThink = true;
-                                thinkDiv = document.createElement('div');
-                                thinkDiv.className = 'think';
-                                botMessageElement.appendChild(thinkDiv);
-                                const before = text.split('<think>')[0];
-                                if (before) {
-                                    fullText += before;
-                                    botParagraph.textContent = fullText;
+                if (done) {
+                    return;
+                }
+                const chunk = new TextDecoder().decode(value);
+                chunk.split(/\n+/).forEach(line => {
+                    if (line.trim()) {
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.response) {
+                                let text = data.response;
+                                while (text.length > 0) {
+                                    if (!inThink && text.includes('<think>')) {
+                                        inThink = true;
+                                        thinkDiv = document.createElement('div');
+                                        thinkDiv.className = 'think';
+                                        botMessageElement.appendChild(thinkDiv);
+                                        const before = text.split('<think>')[0];
+                                        if (before) {
+                                            fullText += before;
+                                            botParagraph.innerHTML = marked.parse(fullText);
+                                        }
+                                        text = text.substring(text.indexOf('<think>') + 7);
+                                    } else if (inThink && text.includes('</think>')) {
+                                        const inside = text.split('</think>')[0];
+                                        thinkDiv.textContent += inside;
+                                        inThink = false;
+                                        thinkDiv = null;
+                                        text = text.substring(text.indexOf('</think>') + 8);
+                                    } else if (inThink) {
+                                        thinkDiv.textContent += text;
+                                        text = '';
+                                    } else {
+                                        fullText += text;
+                                        botParagraph.innerHTML = marked.parse(fullText);
+                                        text = '';
+                                    }
                                 }
-                                text = text.substring(text.indexOf('<think>') + 7);
-                            } else if (inThink && text.includes('</think>')) {
-                                const inside = text.split('</think>')[0];
-                                thinkDiv.textContent += inside;
-                                inThink = false;
-                                thinkDiv = null;
-                                text = text.substring(text.indexOf('</think>') + 8);
-                            } else if (inThink) {
-                                thinkDiv.textContent += text;
-                                text = '';
-                            } else {
-                                fullText += text;
-                                botParagraph.textContent = fullText;
-                                text = '';  
+                                conversation.scrollTop = conversation.scrollHeight;
+                                button_send.disabled = true;
                             }
+                        } catch (e) {
+                            // Ignora linhas que não são JSON válidas
                         }
-                        conversation.scrollTop = conversation.scrollHeight;
-                        button_send.disabled = true;
                     }
-                } catch (e) {
-                    // Ignora linhas que não são JSON válidas
-                }
-                }
-            });
-            return readChunk();
+                });
+                return readChunk();
             }).finally(() => {
                 button_send.disabled = false;
             });
