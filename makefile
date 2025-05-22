@@ -1,14 +1,16 @@
+.PHONY: all frontend test_request
+
 all:
-	@docker-compose --file 'docker-compose.yml' --project-name 'web-i-tela_home-html' down 
-	@docker-compose up --build
+	@docker compose down
+	@docker compose up --build
 
-.PHONY: backend
-
-backend:
-	@pip install -r backend/requirements.txt
-	@python backend/app.py
-
-front: frontend
+baixar_modelo_local:
+	ollama pull deepseek-r1:7b
 
 frontend:
 	@cd front && npm install && npm start
+
+test_request:
+	@curl -s http://localhost:11434/api/generate \
+		-H "Content-Type: application/json" \
+		-d '{"model":"deepseek-r1:7b","prompt":"Explique brevemente a teoria da relatividade.","stream":false}' | jq
