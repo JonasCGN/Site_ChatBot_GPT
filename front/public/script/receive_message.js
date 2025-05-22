@@ -110,10 +110,7 @@ function addMessageToConversation(message) {
     });
 }
 
-// Exemplo de uso com think separado
-document.addEventListener("DOMContentLoaded", function() {
-    addMessageToConversation(
-        "Olá, como posso ajudar?",
-        true,
-    );
-});
+// addMessageToConversation(
+//     "Olá, como posso ajudar?",
+//     true,
+// );
