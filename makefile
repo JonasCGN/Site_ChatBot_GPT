@@ -13,4 +13,4 @@ frontend:
 test_request:
 	@wsl curl -s http://localhost:11434/api/generate \
 		-H "Content-Type: application/json" \
-		-d '{"model":"deepseek-r1:7b","prompt":"Explique brevemente a teoria da relatividade.","stream":false}' | jq
+		-d '{"model":"deepseek-r1:7b","prompt":"Explique brevemente a teoria da relatividade.","stream":true}' | jq

@@ -1,46 +1,68 @@
 .chat_bot{
     display: flex;
     justify-content: flex-start;
+    flex-direction: column-reverse;
+
+    width: 680px;
+
+    padding: 25px;
+}
+
+.chat_bot .title_think{
+    background-color: var(--color-bg-think);
+    border-radius: 15px;
+
+    width: 20%;
+}
+
+.chat_bot h3{
+    background-color: var(--color-bg-think);
+    color: var(--color-user);
+
+    font-size: var(--font-size-h3);
+    text-align: center;
+}
+
+.chat_bot .think {
+    color: var(--color-think);
+    text-align: justify;
+
+    padding: 20px;
+    border-left: 4px solid var(--color-bg-think);
 }
 
 .chat_bot_mensage{
     border-radius: 25px;
+
     padding: 20px;
 }
 
 .chat_bot_mensage p{
-    color: #ffffff;
+    color: var(--color-bot);
     
     max-width: 680px;        /* controla o comprimento da linha (≈65-75 car.) */
     width: 100%;
     
-    margin: 6px 20px; /* Mais espaçamento horizontal */
-    border-radius: 12px;
-
     font-family: "Inter", sans-serif;
     /* O texto em si fica sempre à esquerda: */
     text-align: left;
-    line-height: 1.6;
+    
     word-break: break-word; /* Melhor quebra de linha */
     overflow-wrap: break-word;
-    white-space: pre-line; /* Mantém quebras e melhora a quebra automática */
-    padding-left: 10px;
+
     padding-right: 10px;
+    font-size: var(--font-size-base);
 }
 
 @media (max-width: 698px) {
     .chat_bot {
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: flex-start;
-    }
-
-    .chat_bot_mensage {
         max-width: 100%;
-        padding: 15px;
     }
 
     .chat_bot_mensage p {
-        font-size: 14px;
+        font-size: var(--font-size-base-mobile);
         line-height: 1.4;
     }
 }
