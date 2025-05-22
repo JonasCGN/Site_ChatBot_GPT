@@ -3,15 +3,20 @@ const button_send = document.getElementById("button_send");
 send_message = false;
 
 function sendMessage() {
+    button_send.disabled = true;
+
     const input = document.getElementById("input_message");
     const message = input.value.trim();
     if (message) {
         addMessageToConversation(message);
         input.value = "";
+    }else{
+        button_send.disabled = false;
     }
 }
 
 function addMessageToConversation(message, showThink = false) {
+
     if (!send_message) {
         send_message = true;
         const content_chat = document.getElementsByClassName("content_chat");
@@ -70,6 +75,7 @@ function addMessageToConversation(message, showThink = false) {
         function readChunk() {
             return reader.read().then(({ done, value }) => {
                 if (done) {
+                    button_send.disabled = false;
                     return;
                 }
                 const chunk = new TextDecoder().decode(value);
@@ -101,13 +107,33 @@ function addMessageToConversation(message, showThink = false) {
                                         thinkDiv.textContent += text;
                                         text = '';
                                     } else {
+                                        text = text.replace(/\\(?!n|\\)/g, '\\\\');
                                         fullText += text;
+
                                         botParagraph.innerHTML = marked.parse(fullText);
+                                        if (window.MathJax) {
+                                            MathJax.typesetPromise();
+                                        }
                                         text = '';
                                     }
                                 }
-                                conversation.scrollTop = conversation.scrollHeight;
-                                button_send.disabled = true;
+                                // conversation.scrollTop = conversation.scrollHeight;
+
+                                // Tradução automática do texto do bot
+                                if (window.translateBotResponse) {
+                                    window.translateBotResponse(fullText).then(translated => {
+                                        // Cria um novo elemento para mostrar a tradução
+                                        let translationDiv = botMessageElement.querySelector('.bot-translation');
+                                        if (!translationDiv) {
+                                            translationDiv = document.createElement('div');
+                                            translationDiv.className = 'bot-translation';
+                                            botMessageElement.appendChild(translationDiv);
+                                        }
+                                        translationDiv.innerHTML = `<strong>Tradução:</strong> ${marked.parse(translated)}`;
+                                    }).catch(() => {
+                                        // Se falhar, não mostra nada
+                                    });
+                                }
                             }
                         } catch (e) {
                             // Ignora linhas que não são JSON válidas
@@ -115,8 +141,6 @@ function addMessageToConversation(message, showThink = false) {
                     }
                 });
                 return readChunk();
-            }).finally(() => {
-                button_send.disabled = false;
             });
         }
         return readChunk();
@@ -125,3 +149,5 @@ function addMessageToConversation(message, showThink = false) {
         console.error("Error:", error);
     });
 }
+
+// addMessageToConversation("Me fale sobre a teoria da relatividade");

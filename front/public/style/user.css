@@ -11,6 +11,7 @@
 
     border-radius: 25px;
     padding: 20px;
+    word-break: break-word;
 }
 
 .user_mensagem p {
@@ -24,6 +25,8 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: var(--font-size-base);
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 @media (max-width: 698px) {
