@@ -19,7 +19,7 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ollama-local:/root/.ollama
+      - ${PATH_VOULUME}
     command: ["serve"]
     networks:
       - net
