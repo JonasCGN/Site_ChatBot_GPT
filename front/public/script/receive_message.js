@@ -1,5 +1,6 @@
 conversation = document.getElementById("conversation");
 const button_send = document.getElementById("button_send");
+button_send.disabled = false;
 send_message = false;
 
 function sendMessage() {
@@ -91,6 +92,15 @@ function addMessageToConversation(message, showThink = false) {
                                         thinkDiv = document.createElement('div');
                                         thinkDiv.className = 'think';
                                         botMessageElement.appendChild(thinkDiv);
+                                        
+                                        title_think = document.createElement('div');
+                                        title_think.className = 'title_think';
+                                        botMessageElement.appendChild(title_think);
+
+                                        const h3_title = document.createElement('h3');
+                                        h3_title.textContent = 'Pensando...';
+                                        title_think.appendChild(h3_title);
+
                                         const before = text.split('<think>')[0];
                                         if (before) {
                                             fullText += before;

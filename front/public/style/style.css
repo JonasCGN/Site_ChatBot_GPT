@@ -148,11 +148,12 @@ button{
     }
 
     .form_content{
-        max-width: 80%;
+        max-width: 65%;
     }
 
     .form_content.message {
         width: 100%;
+        max-width: 100%;
 
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
