@@ -1,5 +1,6 @@
 conversation = document.getElementById("conversation");
 const button_send = document.getElementById("button_send");
+button_send.disabled = false;
 send_message = false;
 
 function sendMessage() {

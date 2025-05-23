@@ -22,7 +22,7 @@
 				</h1>
 				<div class="form_content">
 					<div>
-						<input type="text" id="input_message" placeholder="Pergunte alguma coisa" onkeydown="if(event.key === 'Enter' && !document.getElementById('button_send').disabled){ sendMessage(); }">
+						<input type="text" id="input_message" placeholder="Pergunte alguma coisa" onkeydown="toggleSendButton()">
 						<div>
 							<button id="button_send" onclick="sendMessage()">
 								<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-md">
@@ -41,6 +41,6 @@
 {% endblock %}
 
 {% block script %}
-	<script src="./script/receive_message.js"></script>
 	<script src="./script/utils/toggleSendButton.js"></script>
+	<script src="./script/receive_message.js"></script>
 {% endblock %}
