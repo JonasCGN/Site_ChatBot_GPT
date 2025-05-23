@@ -5,8 +5,11 @@ send_message = false;
 
 function sendMessage() {
     button_send.disabled = true;
-
     const input = document.getElementById("input_message");
+    if (event.key === 'Enter') {
+        input.style.height = 'auto';
+    }
+    
     const message = input.value.trim();
     if (message) {
         addMessageToConversation(message);
@@ -17,7 +20,6 @@ function sendMessage() {
 }
 
 function addMessageToConversation(message, showThink = false) {
-
     if (!send_message) {
         send_message = true;
         const content_chat = document.getElementsByClassName("content_chat");

@@ -71,18 +71,36 @@ form{
     flex-direction: column;
 }
 
-input[type="text"] {
-    all: unset;
-    
+.form_content div{
     width: 100%;
+}
+
+.form_content div textarea {
+    width: 100%;
+    min-height: 40px;
+    max-height: 300px;
+
+    resize: none;
+    overflow-y: auto;
     margin-bottom: 10px;
 
     color: var(--color-user);
     background: var(--color-bg-form);
 
-    white-space: pre-wrap;
-    text-wrap-mode: nowrap;
     text-align: justify;
+    font-family: inherit;
+    font-size: inherit;
+    box-sizing: border-box;
+
+    display: block;
+    line-height: 1.5;
+    padding: 8px 12px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 8px;
+    transition: height 0.2s;
 }
 
 .form_content div div{
